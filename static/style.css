@@ -778,4 +778,6 @@ dd {
 	background-color: black}
 
 .Box.Test {
-	height: 400px}
+	height: 400px;
+	overflow: hidden;
+	margin: 0;}
