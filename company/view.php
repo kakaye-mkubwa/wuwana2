@@ -22,6 +22,18 @@
 	<link rel="apple-touch-icon" href="/static/favicon/180.png" sizes="180x180">
 	<link rel="stylesheet" type="text/css" href="/static/style.css">
 	<script src="/static/es5.js" defer></script>
+
+	<link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+      integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+      integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+      crossorigin=""
+    ></script>
 </head>
 <body>
 	<header class="HeaderBar">
@@ -176,7 +188,31 @@
 			</section>
 			<section>
 				<h2>Mapa</h2>
-				<div class="Box Test"></div>
+				<div id="map" class="Box Test">
+				</div>
+				
+
+				<script>
+					const logo = L.icon({
+						iconUrl: 'https://instagram.fyhu2-1.fna.fbcdn.net/v/t51.2885-19/s320x320/17125970_275199979571506_8684942030251491328_a.jpg?_nc_ht=instagram.fyhu2-1.fna.fbcdn.net&_nc_ohc=D1aQ2DojpCgAX9n_FXi&_nc_tp=25&oh=60fdcdaf24c76d448efc6c431898cc5e&oe=5FD8D290',
+						iconSize: [50, 50],
+						iconAnchor: [25, 16]
+					});
+					let lat = 40.366870
+					let lon = -3.487450
+					// Making a map and tiles
+					// Setting a higher initial zoom to make effect more obvious
+					const mymap = L.map('map').setView([lat, lon], 16);
+					const attribution =
+						'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+					const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+					const tiles = L.tileLayer(tileUrl, { attribution });
+					tiles.addTo(mymap);
+
+					let marker = L.marker([lat, lon], { icon: logo }).addTo(mymap);
+
+					</script>
+
 			</section>
 			<a class="Center" href="/">
 				<div class="Button Center"><img src="/static/icon/home.svg"> Volver a la pagina principal</div>

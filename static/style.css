@@ -778,6 +778,4 @@ dd {
 	background-color: black}
 
 .Box.Test {
-	padding-top: 56.25%;
-	background-color: blue;
-	position: relative}
+	height: 400px}
