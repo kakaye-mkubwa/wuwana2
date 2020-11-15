@@ -30,11 +30,11 @@
 	<script src="/static/es5.js" defer></script>
 
 
-    <script
+    <script // Leaflet.JS to make the map
       src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-      crossorigin=""
-    ></script>
+	  crossorigin="">
+	</script>
 </head>
 <body>
 	<header class="HeaderBar">
@@ -190,26 +190,27 @@
 			<section>
 				<h2>Mapa</h2>
 				<div class="Box" >
-					<div style="z-index: 2000; position: absolute; top: 16px; right: 16px; background-color: white">
+					<div class="Map-info">
 						<h3>Camden Coffee Roaster</h3>
-						<p>Address 1<br>Address 2<br>City, Region<br>Postal Code<br>Country</p>
+						<p>Plaza de la Constitución, 7<br>Velilla de San Antonio, Madrid, 28891</p>
+						<br>
+						<a>Ver en Google Maps</a>
 					</div>
-					<div id="map" class="Box Test"></div>
+					<div id="map" class="Box Map"></div>
 				</div>
 			
-
 				<script>
 					// Unique for each company
 					let lat = 40.366870
 					let lon = -3.487450
-					const logo = L.icon({
-						iconUrl: 'https://instagram.fyhu2-1.fna.fbcdn.net/v/t51.2885-19/s320x320/17125970_275199979571506_8684942030251491328_a.jpg?_nc_ht=instagram.fyhu2-1.fna.fbcdn.net&_nc_ohc=D1aQ2DojpCgAX9n_FXi&_nc_tp=25&oh=60fdcdaf24c76d448efc6c431898cc5e&oe=5FD8D290',
+					let logo = L.icon({
+						iconUrl: 'https://instagram.fyhu2-1.fna.fbcdn.net/v/t51.2885-19/s150x150/90791275_144179863618341_2619563857353375744_n.jpg?_nc_ht=instagram.fyhu2-1.fna.fbcdn.net&_nc_ohc=rsm7mowxMWoAX8k9ZKh&_nc_tp=25&oh=178e2f20f093ecb74f4417bf210daeb7&oe=5FD9C828',
 						iconSize: [48, 48],
 						iconAnchor: [0, 0],
 					});
 					
 					// Making a map and tiles
-					const mymap = L.map('map', {scrollWheelZoom: false}).setView([lat, lon], 14);
+					const mymap = L.map('map', {scrollWheelZoom: false}).setView([lat, lon], 16);
 					
 					const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 					const tileUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';

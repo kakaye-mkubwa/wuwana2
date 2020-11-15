@@ -53,9 +53,6 @@ p {
 	line-height: 1.5;
 	margin-top: 8px}
 
-a {
-	text-decoration: none}
-
 input[type="checkbox"] {
 	width: 16px;
 	height: 16px;
@@ -572,6 +569,44 @@ dd {
 		height: 100%;
 		object-fit: cover}
 
+.Box.Map {
+	height: 400px;
+	position: relative;
+	margin: 0;
+}
+
+.Map-info {
+	background-color: #ffffff;
+	border-radius: 4px;
+	padding: 8px 24px 8px 8px;
+	min-width: 25%;
+	z-index: 2000;
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	box-shadow: 4px 1px 8px 2px rgba(0, 0, 0, 0.05)}
+
+	.Map-info h3 {
+		font-size: .875rem;
+		font-weight: 500;
+		line-height: 1;
+		margin-bottom: 4px;}
+
+	.Map-info p {
+		margin: 0;
+		font-size: 0.75rem;
+		line-height: 1.2;
+		color: #676464;}
+
+	.Map-info a {
+		color: #5A8DE0;
+		font-size: 0.75rem;
+		cursor: pointer;}
+
+	.Map-info a:hover {
+		text-decoration: underline;}
+
+
 /* OTHER */
 
 .VisuallyHidden {
@@ -604,6 +639,16 @@ dd {
 		font-weight: 400;
 		position: relative;
 		top: 4px}
+
+/* Leaflet.JS map customization */
+
+.leaflet-marker-icon {
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	border-radius: 50%;
+	box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.05)}
+
 
 /* LAYOUT CHANGES FOR TABLET DEVICES */
 @media screen and (max-width: 800px)
@@ -782,12 +827,6 @@ dd {
 	overflow: hidden;
 	margin: 0;}
 
-/* div icon */
 
-.leaflet-marker-icon {
-	border-style: solid;
-	border-width: 1px;
-	border-color: black;
-	border-radius: 50%;
-	box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.05)}
+
 	
