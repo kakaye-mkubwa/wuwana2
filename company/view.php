@@ -20,15 +20,16 @@
 	<link rel="apple-touch-icon" href="/static/favicon/144.png" sizes="144x144">
 	<link rel="apple-touch-icon" href="/static/favicon/152.png" sizes="152x152">
 	<link rel="apple-touch-icon" href="/static/favicon/180.png" sizes="180x180">
-	<link rel="stylesheet" type="text/css" href="/static/style.css">
-	<script src="/static/es5.js" defer></script>
-
 	<link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
       crossorigin=""
     />
+	<link rel="stylesheet" type="text/css" href="/static/style.css">
+	<script src="/static/es5.js" defer></script>
+
+
     <script
       src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
@@ -189,13 +190,13 @@
 			<section>
 				<h2>Mapa</h2>
 				<div class="Box" >
-					<h3>Camden Coffee Roaster</h3>
-					<p>Address 1<br>Address 2<br>City, Region<br>Postal Code<br>Country</p>
-					<div class="Button">Ver más en Google</div>
+					<div style="z-index: 2000; position: absolute; top: 16px; right: 16px; background-color: white">
+						<h3>Camden Coffee Roaster</h3>
+						<p>Address 1<br>Address 2<br>City, Region<br>Postal Code<br>Country</p>
+					</div>
 					<div id="map" class="Box Test"></div>
 				</div>
-				
-				
+			
 
 				<script>
 					// Unique for each company
@@ -208,7 +209,7 @@
 					});
 					
 					// Making a map and tiles
-					const mymap = L.map('map').setView([lat, lon], 14);
+					const mymap = L.map('map', {scrollWheelZoom: false}).setView([lat, lon], 14);
 					
 					const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 					const tileUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
@@ -217,7 +218,7 @@
 					
 					tiles.addTo(mymap);
 
-					let marker = L.marker([lat, lon], { icon: logo, opacity: .8 }).addTo(mymap);
+					let marker = L.marker([lat, lon], { icon: logo, opacity: .9 }).addTo(mymap);
 
 					</script>
 
