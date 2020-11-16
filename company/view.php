@@ -178,7 +178,7 @@
 				<h2>Mapa</h2>
 				<iframe class="GoogleMaps"
 					frameborder="0"
-					src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBD5IB7EgF8HuA9mk76lyTR9HgqdwH-r3I&zoom=15&language=es
+					src="https://www.google.com/maps/embed/v1/place?key=[private-key]&zoom=15&language=es
 						&q=Hanso+Cafe,Madrid" allowfullscreen>
 				</iframe>
 			</section>
