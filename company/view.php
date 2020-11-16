@@ -176,11 +176,11 @@
 			</section>
 			<section>
 				<h2>Mapa</h2>
-				<iframe
+				<iframe class="GoogleMaps"
 					frameborder="0"
 					src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBD5IB7EgF8HuA9mk76lyTR9HgqdwH-r3I&zoom=15&language=es
 						&q=Hanso+Cafe,Madrid" allowfullscreen>
-					</iframe>
+				</iframe>
 			</section>
 			<a class="Center" href="/">
 				<div class="Button Center"><img src="/static/icon/home.svg"> Volver a la pagina principal</div>

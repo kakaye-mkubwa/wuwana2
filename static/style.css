@@ -574,7 +574,7 @@ dd {
 
 /* OTHER */
 
-iframe {
+.GoogleMaps {
 	border-radius: 8px;
 	height: 400px;
 	margin-bottom: 24px;
