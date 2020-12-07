@@ -204,10 +204,12 @@
 					let lat = 40.366870
 					let lon = -3.487450
 					let logo = L.icon({
-						iconUrl: 'https://instagram.fyhu2-1.fna.fbcdn.net/v/t51.2885-19/s150x150/90791275_144179863618341_2619563857353375744_n.jpg?_nc_ht=instagram.fyhu2-1.fna.fbcdn.net&_nc_ohc=rsm7mowxMWoAX8k9ZKh&_nc_tp=25&oh=178e2f20f093ecb74f4417bf210daeb7&oe=5FD9C828',
+						iconUrl: 'https://instagram.fyhu2-1.fna.fbcdn.net/v/t51.2885-19/s150x150/17125970_275199979571506_8684942030251491328_a.jpg?_nc_ht=instagram.fyhu2-1.fna.fbcdn.net&_nc_ohc=vGXGupvrxGwAX_8WI9t&tp=1&oh=3ae5fe28fefeb1df144e809717de5ca5&oe=5FF67980',
 						iconSize: [48, 48],
-						iconAnchor: [0, 0],
+						iconAnchor: [40, 20],
 					});
+
+
 					
 					// Making a map and tiles
 					const mymap = L.map('map', {scrollWheelZoom: false}).setView([lat, lon], 16);
