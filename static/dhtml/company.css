@@ -103,3 +103,64 @@
 	height: 100%;
 	object-fit: cover
 }
+
+/* Facebook Card  */
+
+.fb-card hr {
+	margin-bottom: 16px;
+}
+
+.fb-rating {
+	display: flex;
+	align-items: flex-start;
+}
+
+.fb-rating img {
+	margin-right: 8px;
+}
+
+.fb-rating div h3 {
+	font-size: var(--font-xl);
+	line-height: 1.1;
+	margin: 0;
+}
+
+.fb-rating div p {
+	color: var(--grey500);
+	margin: 0 0 16px;
+}
+
+.fb-review {
+	display: flex;
+	align-items: flex-start;
+}
+
+.fb-logo {
+	min-width: 16px;
+	width: 16px;
+	height: 16px;
+	min-height: 16px;
+	margin-top: 1px; /* To visually center the logo */
+	margin-right: 8px;
+}
+
+.fb-logo img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+
+}
+
+.fb-review h4 {
+	margin: 0;
+	font-size: var(--font-m);
+	font-weight: 500;
+	color: var(--grey700);
+}
+
+.fb-review p {
+	margin: 4px 0 16px;
+	max-width: 70ch;
+	line-height: 1.5;
+}
+
