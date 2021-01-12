@@ -186,7 +186,7 @@
 			<section class="fb-card">
 				<h2>Facebook reviews</h2>
 				<div class="box pad-16">
-					<div class="fb-rating">
+					<div class="fb-card-rating">
 						<img src="static/icon/star.svg" aria-hidden="true">
 						<div>
 							<h3>5 out of 5</h3>
@@ -194,37 +194,35 @@
 						</div>
 					</div>
 					<hr>
-					<section>
-						<div class="fb-review">
-							<div class="fb-logo">
-								<img src="https://facebookbrand.com/wp-content/uploads/2019/04/f_logo_RGB-Hex-Blue_512.png?w=512&h=512">
-							</div>
-							<div>
-								<h4>On June 6, 2019</h4>
-								<p>Best coffee in town ! If you want to buy or drink a good coffee ...this is the place ❤️</p>
-							</div>
+					<div class="fb-card-review">
+						<div class="fb-card-review-logo">
+							<img src="https://facebookbrand.com/wp-content/uploads/2019/04/f_logo_RGB-Hex-Blue_512.png?w=512&h=512">
 						</div>
-						<hr>
-						<div class="fb-review">
-							<div class="fb-logo">
-								<img src="https://facebookbrand.com/wp-content/uploads/2019/04/f_logo_RGB-Hex-Blue_512.png?w=512&h=512">
-							</div>
-							<div>
-								<h4>On November 7, 2018</h4>
-								<p>No hay nada no recomendable en Camden, un café espectacular, la repostería casera😋. Me encanta el ambiente y la tranquilidad que respiro allí.</p>
-							</div>
+						<div>
+							<h4>On June 6, 2019</h4>
+							<p>Best coffee in town ! If you want to buy or drink a good coffee ...this is the place ❤️</p>
 						</div>
-						<hr>
-						<div class="fb-review">
-							<div class="fb-logo">
-								<img src="https://facebookbrand.com/wp-content/uploads/2019/04/f_logo_RGB-Hex-Blue_512.png?w=512&h=512">
-							</div>
-							<div>
-								<h4>On August 8, 2018</h4>
-								<p>La mejor atención y los mejores productos, todo en uno</p>
-							</div>
+					</div>
+					<hr>
+					<div class="fb-card-review">
+						<div class="fb-card-review-logo">
+							<img src="https://facebookbrand.com/wp-content/uploads/2019/04/f_logo_RGB-Hex-Blue_512.png?w=512&h=512">
 						</div>
-					</section>
+						<div>
+							<h4>On November 7, 2018</h4>
+							<p>No hay nada no recomendable en Camden, un café espectacular, la repostería casera😋. Me encanta el ambiente y la tranquilidad que respiro allí.</p>
+						</div>
+					</div>
+					<hr>
+					<div class="fb-card-review">
+						<div class="fb-card-review-logo">
+							<img src="https://facebookbrand.com/wp-content/uploads/2019/04/f_logo_RGB-Hex-Blue_512.png?w=512&h=512">
+						</div>
+						<div>
+							<h4>On August 8, 2018</h4>
+							<p>La mejor atención y los mejores productos, todo en uno</p>
+						</div>
+					</div>
 					<hr>
 					<a class="button-icon center" href="/">
 						<img src="static/icon/facebook.svg">
