@@ -7,6 +7,7 @@
  * Limitations:
  * - Shopify sites
  * - Redirect links (ie levogirar.com -> levogirar.github.io)
+ * - Only example.com and example.com/contact
  */
 
 $url = ''; // Target website
@@ -41,7 +42,6 @@ function getBodyTexts($url)
 				$bodyTexts = $bodyTexts . " " . $body->textContent;
 			}
 		}
-		$url = 'http://' . parse_url($url, PHP_URL_HOST); // Reset the URL
 	}
 
 	return $bodyTexts;
