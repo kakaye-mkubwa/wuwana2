@@ -1,47 +1,118 @@
 <?php
 
-/**
- * Resources:
- * - https://github.com/adavijit/AVDOJO-TUTORIALS/blob/master/webcrawling_php.php
- * 
- * Limitations:
- * - Shopify sites
- * - Redirect links (ie levogirar.com -> levogirar.github.io)
- * - Only example.com and example.com/contact
- */
+$url = '';
 
-$url = ''; // Target website
-$url = 'http://' . parse_url($url, PHP_URL_HOST); // Find the base url
+// Shared variables
+$dom = new DOMDocument();
+$noScrape = ['facebook.com', 'linktr.ee']; // Websites to avoid
+$pages = ['contacto', 'contact', 'privacy']; // Pages to scrape
+$bodyTexts = ''; // Text of the company
 
-$bodyTexts = getBodyTexts($url);
-$emails = getEmails($bodyTexts);
-$numbersES = getNumbersES($bodyTexts);
-$phonesES = getPhonesES($numbersES);
-$mobilesES = getMobilesES($numbersES);
+// Get base website
+$urlHost = getWebsiteBase($url);
 
-/**
- * Get the website homepage
- * @param string $url Website URL
- * @return string $bodyTexts Text between <body></body> in a HTML
- */
-function getBodyTexts($url)
-{
-	$bodyTexts = ''; // Text
-	$pages = ['', 'contacto', 'contact']; // What pages to scrape
+// Decide to scrape or not 
+if (in_array($urlHost, $noScrape)) {
+	return '';
+} else {
+	$url = 'http://' . $urlHost; // Create homepage url
+	$html = file_get_contents($url);  // Download the HTML page
+	
+	// Scrape homepage
+	@$dom->loadHTML($html);
+	getWebsiteDescription($dom); // Get website description
+	$bodyTexts = $bodyTexts . getBodyTexts($dom); // Get texts from body
+	
+	// Scrape other pages
 	foreach ($pages as &$page) {
-		$newURL = $url . '/' . $page;
-		$file_headers = @get_headers($newURL);
+		$newURL = $url . '/' . $page; // Create url to scrape
+		
 		// Verify if it is a valid website
-		if (!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+		$file_headers = @get_headers($newURL);
+		if (!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found')
+		{
 			// do nothing
-		} else {
+		} 
+		else 
+		{
 			$html = file_get_contents($newURL);
-			$dom = new DOMDocument();
 			@$dom->loadHTML($html);
-			foreach ($dom->getElementsByTagName('body') as $body) { // Get the body text and add it as a string
-				$bodyTexts = $bodyTexts . " " . $body->textContent;
-			}
+			$bodyTexts = $bodyTexts . getBodyTexts($dom); // Get texts from body
 		}
+	}
+}
+
+// $emails = getEmails($bodyTexts);
+// $numbersES = getNumbersES($bodyTexts);
+// $phonesES = getPhonesES($numbersES);
+// $mobilesES = getMobilesES($numbersES);
+// $postalCodeES = getPostalCodeES($bodyTexts);
+
+print $bodyTexts;
+
+/**
+ * Get website base url
+ * @param string $url
+ * @return string $urlHost
+ */
+function getWebsiteBase($url) {
+	if (strpos($url, '://') > 0){
+		$urlHost = parse_url($url, PHP_URL_HOST);
+	} else {
+		$urlHost = parse_url('http://' . $url, PHP_URL_HOST); //PHP_URL_HOST does not work without 'http://' 
+	}
+
+	return $urlHost;
+}
+
+/**
+ * Get the website description.
+ * @param $dom 
+ * @return string
+ */
+function getWebsiteDescription($dom)
+{
+	$metaTags = [];
+
+	foreach ($dom->getElementsByTagName('meta') as $meta)
+	{
+		if ($meta->hasAttribute('property'))
+		{ $metaTags[strtolower($meta->getAttribute('property'))] = trim($meta->getAttribute('content')); }
+		elseif ($meta->hasAttribute('name'))
+		{ $metaTags[strtolower($meta->getAttribute('name'))] = trim($meta->getAttribute('content')); }
+	}
+
+	foreach (['description', 'og:description', 'twitter:description'] as $attribute)
+	{
+		if (!empty($metaTags[$attribute]))
+		{ return $metaTags[$attribute]; }
+	}
+
+	// If there were no description available maybe we can use the page title...
+	$title = $dom->getElementsByTagName('title')->item(0);
+
+	if ($title != null && !empty($title->nodeValue))
+	{ return trim($title->nodeValue); }
+
+	if (!empty($metaTags['og:title']))
+	{ return $metaTags['og:title']; }
+
+	if (!empty($metaTags['twitter:title']))
+	{ return $metaTags['twitter:title']; }
+
+	return '';
+}
+
+/**
+ * Get the text between <body></body>
+ * @param $dom 
+ * @return string $bodyTexts
+ */
+function getBodyTexts($dom)
+{
+	foreach ($dom->getElementsByTagName('body') as $body) {
+		// Get the body text and add it as a string
+		$bodyTexts = $body->textContent . ' ';
 	}
 
 	return $bodyTexts;
@@ -65,11 +136,9 @@ function getEmails($texts)
 
 	$patternEmail = '/[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}/';
 	preg_match_all($patternEmail, $texts, $emails);
-	$emails = array_values(array_unique($emails)); // Remove duplicate emails
+	$emails = array_values(array_unique($emails[0])); // Remove duplicate emails
 
-	$emails = $emails[0];
-
-	return $emails;
+	return $emails[0];
 }
 
 /**
@@ -95,14 +164,14 @@ function getNumbersES($texts)
 	$eliminate = ['.', ' ', '-']; // Characters to be replaced
 	$numbersES = str_replace($eliminate, '', $numbersES); // Remove special characters
 
-	// Standardize mobile numbers
+	// Standardize numbers
 	foreach ($numbersES as &$number) {
-		if (substr($number, 0, 3) === $callingCodeES) {
+		if (substr($number, 0, 3) === $callingCodeES) { // Check for "+34" in string 
 			$number = $number;
-		} elseif (substr($number, 0, 4) === $callingCodeES2) {
-			$number = str_replace($callingCodeES2, $callingCodeES, substr($number, 0, 4)) . substr($number, 4, 9); // Change 0034612345678 to +34612345678
+		} elseif (substr($number, 0, 4) === $callingCodeES2) { // Replace "0034" with "+34"
+			$number = str_replace($callingCodeES2, $callingCodeES, substr($number, 0, 4)) . substr($number, 4, 9); 
 		} else {
-			$number = $callingCodeES . $number; // Add +34 to mobile number
+			$number = $callingCodeES . $number; // Add "+34" to mobile number
 		}
 	}
 
@@ -121,10 +190,8 @@ function getMobilesES($texts)
 {
 	$patternMobileES = '/[+]34(6|7)[0-9]{8}/';
 
-	preg_match_all($patternMobileES, $texts, $mobilesES); // Verify Spanish mobile number
-	$mobilesES = $mobilesES[0];
-
-	return $mobilesES;
+	preg_match_all($patternMobileES, $texts, $mobilesES); // Find Spanish mobile number
+	return $mobilesES[0];
 }
 
 /**
@@ -136,8 +203,26 @@ function getPhonesES($texts)
 {
 	$patternPhoneES = '/[+]349[0-9]{8}/';
 
-	preg_match_all($patternPhoneES, $texts, $phonesES); // Verify Spanish landline number
-	$phonesES = $phonesES[0];
+	preg_match_all($patternPhoneES, $texts, $phonesES); // Find Spanish landline number
+	return $phonesES[0];
+}
 
-	return $phonesES;
+/**
+ * Find Spanish postal code
+ * @param string $texts
+ * @return array $postalCodeES
+ * https://en.wikipedia.org/wiki/List_of_postal_codes_in_Spain
+ * 5 digits
+ * Range [03000 - 52081]
+ */
+function getPostalCodeES($texts) {
+	/**
+	 * Find all the numbers
+	 * select only numbers with 5 digis
+	 * find numbers between the range of numbers
+	 * 
+	 * Notes: Regex /[0-5][0-9]{4}/ does not work as expected
+	 * -> it could take the first five digits of a long string of numbers
+	 */
+
 }
