@@ -1,6 +1,6 @@
 <?php
 
-$url = '';
+$url = 'https://camdencoffeeroasters.com';
 
 // Shared variables
 $dom = new DOMDocument();
@@ -42,13 +42,11 @@ if (in_array($urlHost, $noScrape)) {
 	}
 }
 
-// $emails = getEmails($bodyTexts);
-// $numbersES = getNumbersES($bodyTexts);
-// $phonesES = getPhonesES($numbersES);
-// $mobilesES = getMobilesES($numbersES);
-// $postalCodeES = getPostalCodeES($bodyTexts);
-
-print $bodyTexts;
+$emails = getEmails($bodyTexts);
+$numbersES = getNumbersES($bodyTexts);
+$phonesES = getPhonesES($numbersES);
+$mobilesES = getMobilesES($numbersES);
+$postalCodeES = getPostalCodeES($bodyTexts);
 
 /**
  * Get website base url
@@ -110,6 +108,20 @@ function getWebsiteDescription($dom)
  */
 function getBodyTexts($dom)
 {
+	// Remove script tags
+	// https://stackoverflow.com/questions/7130867/remove-script-tag-from-html-content
+
+	$script = $dom->getElementsByTagName('script');
+
+	$remove = [];
+	foreach($script as $item) {
+		$remove[] = $item;
+	}
+
+	foreach ($remove as $item) {
+		$item->parentNode->removeChild($item); 
+	}
+
 	foreach ($dom->getElementsByTagName('body') as $body) {
 		// Get the body text and add it as a string
 		$bodyTexts = $body->textContent . ' ';
@@ -216,13 +228,11 @@ function getPhonesES($texts)
  * Range [03000 - 52081]
  */
 function getPostalCodeES($texts) {
-	/**
-	 * Find all the numbers
-	 * select only numbers with 5 digis
-	 * find numbers between the range of numbers
-	 * 
-	 * Notes: Regex /[0-5][0-9]{4}/ does not work as expected
-	 * -> it could take the first five digits of a long string of numbers
-	 */
+	$patternPostalCodeES = '/\b[0-5][0-9]{4}\b/';
+
+	preg_match_all($patternPostalCodeES, $texts, $onlyDigits);
+	$postalCodeES = array_values(array_unique($onlyDigits[0]));
+
+	return $postalCodeES;
 
 }
