@@ -1,9 +1,10 @@
 <?php
-
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $pageCount = $_POST['pageCount'];
+    $selectedRegions = json_decode(stripslashes($_POST['selectedRegions']));
 
     $locations = WebApp\Data::getLocation()->selectUsefulItemsOnly('es');
+
     $companies = WebApp\Data::getCompany()->selectCategoriesRegions($language, [], $selectedRegions, 0);
     $companies = array_splice($companies,($pageCount*8),8);
     $counter = count($companies);
